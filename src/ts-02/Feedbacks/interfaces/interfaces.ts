@@ -8,11 +8,11 @@ export interface IAppProps {
 
 export interface ISectionFeedbackProps {
   title: string;
-  children: ReactNode;
+  children: Readonly<ReactNode>;
 }
 
 export interface IFeedbackProps {
-  options: string[];
+  options: Readonly<string[]>;
   onLeaveFeedback: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 

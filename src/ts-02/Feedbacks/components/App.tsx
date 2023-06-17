@@ -59,7 +59,7 @@ export class App extends Component<object, IAppProps> {
 
   render() {
     const { good, neutral, bad } = this.state;
-    const options: string[] = ['Good', 'Neutral', 'Bad'];
+    const options: Readonly<string[]> = ['Good', 'Neutral', 'Bad'];
 
     return (
       <Section title="Please leave feedback">
