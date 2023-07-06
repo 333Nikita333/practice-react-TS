@@ -10,12 +10,18 @@ import ReactDOM from 'react-dom/client';
 // import { App } from './ts-02/Phonebook/components/App'; //? ts-02-Phonebook
 // import "./ts-02/Phonebook/index.css"; //? ts-02-Phonebook
 
-import App from './ts-03/components/App/App'; //? ts-03
-import './ts-03/index.css'; //? ts-03
+// import App from './ts-03/components/App/App-03'; //? ts-03
+// import './ts-03/index.css'; //? ts-03
+
+import { App } from './ts-04/components/App/App'; //? ts-04
+import GlobalStyle from './ts-04/GlobalStyles'; //? ts-04
+import { BrowserRouter } from 'react-router-dom'; //? ts-04
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App />
-    {/* <GlobalStyle /> */}
+    <BrowserRouter>
+      <App />
+      <GlobalStyle />
+    </BrowserRouter>
   </React.StrictMode>
 );
