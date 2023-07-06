@@ -24,7 +24,7 @@ const MovieTrailer: FC = () => {
 
   return (
     <MovieTrailerBox>
-      <Trailer url={trailer} width="70%" height="70%" controls="true" />
+      <Trailer url={trailer} width="70%" height="70%" controls={true} />
     </MovieTrailerBox>
   );
 };
