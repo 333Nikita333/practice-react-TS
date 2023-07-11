@@ -1,11 +1,16 @@
-import PropTypes from 'prop-types';
-import { Item, Name, Number } from './ContactListItem.styled';
+import { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from '../../redux/contactsSlice';
+import { Contact } from '../../types/interfaces';
+import { Item, Name, Number } from './ContactListItem.styled';
+import { toast } from 'react-toastify';
 
-const ContactsListItem = ({ id, name, number }) => {
+const ContactsListItem: FC<Contact> = ({ id, name, number }) => {
   const dispatch = useDispatch();
-  const handleDelete = () => dispatch(deleteContact(id));
+  const handleDelete = (): void => {
+    dispatch(deleteContact(id));
+    toast.success(`Contact ${name} deleted`);
+  };
 
   return (
     <Item id={id}>
@@ -16,12 +21,6 @@ const ContactsListItem = ({ id, name, number }) => {
       </button>
     </Item>
   );
-};
-
-ContactsListItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
 };
 
 export default ContactsListItem;

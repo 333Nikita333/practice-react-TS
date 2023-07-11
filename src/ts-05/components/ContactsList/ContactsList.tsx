@@ -1,18 +1,20 @@
-import ContactListItem from 'components/ContactListItem';
-import { List } from './ContactsList.styled';
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { getContacts, getFilter } from 'redux/selectors';
+import { getContacts, getFilter } from '../../redux/selectors';
+import { RootState } from '../../types/interfaces';
+import ContactsListItem from '../ContactListItem/ContactListItem';
+import { List } from './ContactsList.styled';
 
-const ContactsList = () => {
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+const ContactsList: FC = () => {
+  const contacts = useSelector((state: RootState) => getContacts(state));
+  const filter = useSelector((state: RootState) => getFilter(state));
 
   return (
     <List>
       {contacts
         .filter(({ name }) => name.toLowerCase().includes(filter.toLowerCase()))
         .map(({ id, name, number }) => (
-          <ContactListItem key={id} id={id} name={name} number={number} />
+          <ContactsListItem key={id} id={id} name={name} number={number} />
         ))}
     </List>
   );
