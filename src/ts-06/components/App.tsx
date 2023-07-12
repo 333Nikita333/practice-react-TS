@@ -1,35 +1,46 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts, selectError, selectIsLoading } from 'redux/selectors';
-
-import Form from './ContactForm';
-import ContactsList from './ContactsList';
-import { AppBox } from './App.styled';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { addContact, fetchContacts } from 'redux/operations';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { addContact, fetchContacts } from '../redux/operations';
+import {
+  selectContacts,
+  selectError,
+  selectIsLoading,
+} from '../redux/selectors';
+import { AppBox } from './App.styled';
+import ContactForm from './ContactForm/ContactForm';
+import ContactsList from './ContactsList/ContactsList';
+import { Contact, RootState } from '../types/interfaces';
+import { AppDispatch } from '../redux/store';
 
 export default function App() {
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const dispatch: AppDispatch = useDispatch();
+  const contacts: Contact[] = useSelector((state: RootState) =>
+    selectContacts(state)
+  );
+  const isLoading: boolean = useSelector((state: RootState) =>
+    selectIsLoading(state)
+  );
+  const error: string | null = useSelector((state: RootState) =>
+    selectError(state)
+  );
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  function notifiesAlert(numberContact, nameContact) {
-    return toast.error(
+  function notifiesAlert(numberContact: string, nameContact: string): void {
+    toast.error(
       `${numberContact} is already in contacts under the name ${nameContact}.`
     );
   }
 
-  function checkСontact(newNumber) {
+  function checkСontact(newNumber: string): boolean {
     return contacts.some(contact => contact.phone === newNumber);
   }
 
-  function onSubmit(name, phone) {
+  function onSubmit(name: string, phone: string) {
     if (checkСontact(phone)) {
       return notifiesAlert(phone, name);
     }
@@ -42,7 +53,7 @@ export default function App() {
     <AppBox>
       <ToastContainer autoClose={2000} position="top-center" />
       <h1>Phonebook</h1>
-      <Form onSubmit={onSubmit} />
+      <ContactForm onSubmit={onSubmit} />
 
       <h2>Contacts</h2>
 

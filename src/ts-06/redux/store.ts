@@ -8,3 +8,5 @@ export const store = configureStore({
     filter: filterReducer,
   },
 });
+
+export type AppDispatch = typeof store.dispatch;
