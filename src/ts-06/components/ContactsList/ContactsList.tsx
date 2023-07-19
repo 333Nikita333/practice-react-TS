@@ -1,12 +1,17 @@
-import ContactItem from 'components/ContactListItem';
-import { Item, List, Wrapper } from './ContactsList.styled';
 import { useSelector } from 'react-redux';
-import { selectContactByName, selectIsLoading} from 'redux/selectors';
-import Filter from 'components/Filter';
+import { selectContactByName, selectIsLoading } from '../../redux/selectors';
+import ContactsListItem from '../ContactListItem/ContactListItem';
+import Filter from '../Filter/Filter';
+import { Item, List, Wrapper } from './ContactsList.styled';
+import { Contact, RootState } from '../../types/interfaces';
 
 const ContactsList = () => {
-  const contacts = useSelector(selectContactByName);
-  const isLoading = useSelector(selectIsLoading);
+  const contacts: Contact[] = useSelector((state: RootState) =>
+    selectContactByName(state)
+  );
+  const isLoading: boolean = useSelector((state: RootState) =>
+    selectIsLoading(state)
+  );
 
   return (
     <Wrapper>
@@ -16,7 +21,7 @@ const ContactsList = () => {
           <List>
             {contacts.map(contact => (
               <Item key={contact.id}>
-                <ContactItem contact={contact} />
+                <ContactsListItem contact={contact} />
               </Item>
             ))}
           </List>

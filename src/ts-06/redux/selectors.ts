@@ -1,13 +1,16 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { Contact, RootState } from '../types/interfaces';
 
-export const selectContacts = (state: RootState) => state.contacts.contacts;
+export const selectContacts = (state: RootState): Contact[] =>
+  state.contacts.contacts;
 
-export const selectIsLoading = (state: RootState) => state.contacts.isLoading;
+export const selectIsLoading = (state: RootState): boolean =>
+  state.contacts.isLoading;
 
-export const selectError = (state: RootState) => state.contacts.error;
+export const selectError = (state: RootState): string | null =>
+  state.contacts.error;
 
-export const selectFilter = (state: RootState) => state.filter;
+export const selectFilter = (state: RootState): string => state.filter;
 
 export const selectContactByName = createSelector(
   [selectContacts, selectFilter],

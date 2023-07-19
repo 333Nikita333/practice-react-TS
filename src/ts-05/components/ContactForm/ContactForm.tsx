@@ -27,7 +27,7 @@ export default function ContactForm({ onSubmit }: ContactFormProps) {
   function handleSubmit(
     { name, number }: ContactFormValues,
     { resetForm }: FormikHelpers<ContactFormValues>
-  ) {
+  ): void {
     onSubmit(name, number);
     resetForm();
   }

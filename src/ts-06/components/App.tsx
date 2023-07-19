@@ -37,15 +37,15 @@ export default function App() {
   }
 
   function checkСontact(newNumber: string): boolean {
-    return contacts.some(contact => contact.phone === newNumber);
+    return contacts.some(contact => contact.number === newNumber);
   }
 
-  function onSubmit(name: string, phone: string) {
-    if (checkСontact(phone)) {
-      return notifiesAlert(phone, name);
+  function onSubmit(name: string, number: string): void {
+    if (checkСontact(number)) {
+      return notifiesAlert(number, name);
     }
 
-    dispatch(addContact({ name, phone }));
+    dispatch(addContact({ name, number }));
     toast.success(`Contact ${name} added successfully`);
   }
 

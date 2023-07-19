@@ -1,7 +1,7 @@
 export interface Contact {
   id: string;
   name: string;
-  phone: string;
+  number: string;
 }
 
 export interface ContactState {

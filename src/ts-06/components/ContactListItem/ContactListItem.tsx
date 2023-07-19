@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {
   Button,
   ContactInfo,
@@ -8,25 +7,33 @@ import {
   UserIcon,
 } from './ContactListItem.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from 'redux/operations';
-import { selectError, selectIsLoading } from 'redux/selectors';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { toast } from 'react-toastify';
+import { selectError, selectIsLoading } from '../../redux/selectors';
+import { deleteContact } from '../../redux/operations';
+import { ContactListItemProps } from '../../types/types';
+import { AppDispatch } from '../../redux/store';
+import { RootState } from '../../types/interfaces';
 
-const ContactsListItem = ({ contact }) => {
-  const [contactId, setContactId] = useState(null);
+const ContactsListItem: FC<ContactListItemProps> = ({ contact }) => {
+  const [contactId, setContactId] = useState<string | null>(null);
 
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const dispatch: AppDispatch = useDispatch();
+  const isLoading: boolean = useSelector((state: RootState) =>
+    selectIsLoading(state)
+  );
+  const error: string | null = useSelector((state: RootState) =>
+    selectError(state)
+  );
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     dispatch(deleteContact(contact.id));
     setContactId(contact.id);
 
     if (!error) {
       toast.success(`Contact ${contact.name} successfully deleted`);
+      return;
     }
   };
 
@@ -35,7 +42,7 @@ const ContactsListItem = ({ contact }) => {
       <UserIcon />
       <ContactInfo>
         <Name>{contact.name}</Name>
-        <Number>{contact.phone}</Number>
+        <Number>{contact.number}</Number>
       </ContactInfo>
 
       {isLoading && contactId === contact.id ? (
@@ -47,10 +54,6 @@ const ContactsListItem = ({ contact }) => {
       )}
     </>
   );
-};
-
-ContactsListItem.propTypes = {
-  contact: PropTypes.object.isRequired,
 };
 
 export default ContactsListItem;
