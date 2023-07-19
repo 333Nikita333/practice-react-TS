@@ -23,20 +23,29 @@ import ReactDOM from 'react-dom/client';
 // import './ts-05/index.css'; //? ts-05-Phonebook
 // import { persistor, store } from './ts-05/redux/store'; //? ts-05-Phonebook
 
-import { Provider } from 'react-redux';
-import App from './ts-06/components/App';
-import './ts-06/index.css'; //? ts-06-Phonebook
-import { store } from './ts-06/redux/store'; //? ts-06-Phonebook
+// import { Provider } from 'react-redux'; //? ts-06-Phonebook
+// import App from './ts-06/components/App'; //? ts-06-Phonebook
+// import './ts-06/index.css'; //? ts-06-Phonebook
+// import { store } from './ts-06/redux/store'; //? ts-06-Phonebook
+
+import { Provider } from 'react-redux'; //? ts-07-Phonebook
+import { PersistGate } from 'redux-persist/integration/react'; //? ts-07-Phonebook
+import { BrowserRouter } from 'react-router-dom'; //? ts-07-Phonebook
+import { App } from './ts-07/components/App'; //? ts-07-Phonebook
+import GlobalStyle from './ts-07/GlobalStyles'; //? ts-07-Phonebook
+import { persistor, store } from './ts-07/redux/store'; //? ts-07-Phonebook
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
+      <PersistGate loading={null} persistor={persistor}>
         {/* <BrowserRouter> */}
-        <App />
-        {/* <GlobalStyle /> */}
+        <BrowserRouter basename="/Phonebook">
+          <App />
+          <GlobalStyle />
+        </BrowserRouter>
         {/* </BrowserRouter> */}
-      {/* </PersistGate> */}
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
