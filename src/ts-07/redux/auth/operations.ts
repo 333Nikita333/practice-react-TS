@@ -10,6 +10,7 @@ import {
   RootState,
   User,
   UserLogin,
+  UserRegister,
   UserRegisterResponse,
 } from '../../types/interfaces';
 
@@ -17,9 +18,9 @@ contactApi();
 
 export const register = createAsyncThunk<
   UserRegisterResponse,
-  User,
+  UserRegister,
   { state: RootState; rejectValue: string }
->('auth/register', async (credentials: User, thunkAPI) => {
+>('auth/register', async (credentials: UserRegister, thunkAPI) => {
   try {
     const response: AxiosResponse<UserRegisterResponse> = await axios.post(
       '/users/signup',

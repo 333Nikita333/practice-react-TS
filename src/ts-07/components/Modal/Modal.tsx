@@ -1,46 +1,53 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { ErrorMessage } from 'formik';
-import { object, string } from 'yup';
+import { ErrorMessage, Formik, FormikHelpers } from 'formik';
+import { FC, MouseEvent, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { patchContacts } from 'redux/contacts/operations';
+import { useDispatch } from 'react-redux';
+import { ObjectSchema, object, string } from 'yup';
+import {
+  errorNotification,
+  successNotification,
+  useContacts,
+} from '../../hooks';
+import { patchContacts } from '../../redux/contacts/operations';
+import { AppDispatch } from '../../redux/store';
+import { ContactFormValues, ModalProps } from '../../types/types';
 import {
   Button,
   FormBox,
-  FormikWrapper,
   InputName,
-  Message,
   InputTel,
+  Message,
   Overlay,
   Title,
 } from './Modal.styled';
-import { useContacts } from 'hooks';
-import { errorNotification, successNotification } from 'hooks/useToasts';
 
-const modalRoot = document.querySelector('#modal-root');
+const modalRoot = document.querySelector('#modal-root') as HTMLElement;
 
-const userSchema = object({
-  name: string().matches(
-    /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
-    "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-  ),
-  number: string().matches(
-    /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
-    'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
-  ),
+const userSchema: ObjectSchema<ContactFormValues> = object({
+  name: string()
+    .matches(
+      /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+      "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+    )
+    .required(),
+  number: string()
+    .matches(
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+      'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+    )
+    .required(),
 });
 
-const Modal = ({ onCloseModal, id, name, number }) => {
-  const dispatch = useDispatch();
+const Modal: FC<ModalProps> = ({ onCloseModal, id, name, number }) => {
+  const dispatch: AppDispatch = useDispatch();
   const { allContacts } = useContacts();
-
-  const initialValues = {
-    name: name,
-    number: number,
+  const initialValues: ContactFormValues = {
+    name,
+    number,
   };
 
   useEffect(() => {
-    const handleEscDown = e => {
+    const handleEscDown = (e: KeyboardEvent): void => {
       if (e.code === 'Escape') {
         onCloseModal();
       }
@@ -53,13 +60,16 @@ const Modal = ({ onCloseModal, id, name, number }) => {
     };
   }, [onCloseModal]);
 
-  const handleBackdropClick = e => {
+  const handleBackdropClick = (e: MouseEvent<HTMLDivElement>): void => {
     if (e.currentTarget === e.target) {
       onCloseModal();
     }
   };
 
-  const handleSubmit = ({ name, number }, { resetForm }) => {
+  const handleSubmit = (
+    { name, number }: ContactFormValues,
+    { resetForm }: FormikHelpers<ContactFormValues>
+  ): void => {
     for (const contact of allContacts) {
       if (number === contact.number) {
         errorNotification(
@@ -76,10 +86,10 @@ const Modal = ({ onCloseModal, id, name, number }) => {
 
   return createPortal(
     <Overlay onClick={handleBackdropClick}>
-      <FormikWrapper
+      <Formik
         initialValues={initialValues}
-        onSubmit={handleSubmit}
         validationSchema={userSchema}
+        onSubmit={handleSubmit}
       >
         <FormBox autoComplete="off">
           <Title>Change a contact's name or number</Title>
@@ -103,7 +113,7 @@ const Modal = ({ onCloseModal, id, name, number }) => {
           </label>
           <Button type="submit">Change</Button>
         </FormBox>
-      </FormikWrapper>
+      </Formik>
     </Overlay>,
     modalRoot
   );

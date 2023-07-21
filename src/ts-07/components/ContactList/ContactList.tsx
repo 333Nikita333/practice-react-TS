@@ -1,8 +1,9 @@
-import ContactItem from 'components/ContactListItem';
+import { FC } from 'react';
+import { useContacts } from '../../hooks';
+import ContactListItem from '../ContactListItem/ContactListItem';
 import { Item, List, Wrapper } from './ContactList.styled';
-import { useContacts } from 'hooks';
 
-const ContactsList = () => {
+const ContactsList: FC = () => {
   const { filteredContacts } = useContacts();
 
   return (
@@ -12,7 +13,7 @@ const ContactsList = () => {
           <List>
             {filteredContacts.map(({ id, name, number }) => (
               <Item key={id}>
-                <ContactItem id={id} name={name} number={number} />
+                <ContactListItem id={id} name={name} number={number} />
               </Item>
             ))}
           </List>

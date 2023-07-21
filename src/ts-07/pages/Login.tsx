@@ -1,18 +1,19 @@
+import { FC } from 'react';
 import { Helmet } from 'react-helmet';
-import { useAuth, useLoaders } from 'hooks';
-import LoginForm from 'components/LoginForm';
+import { Loader } from '../components/Loader/Loader';
+import LoginForm from '../components/LoginForm/LoginForm';
+import { useAuth } from '../hooks';
 
-const Login = () => {
+const Login: FC = () => {
   const { isLoading } = useAuth();
-  const { LoaderBig } = useLoaders();
-  
+
   return (
     <>
       <Helmet>
         <title>Login</title>
       </Helmet>
-      
-      {isLoading && <LoaderBig />}
+
+      {isLoading && <Loader />}
       <LoginForm />
     </>
   );

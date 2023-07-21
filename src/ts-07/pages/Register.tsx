@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import { Helmet } from 'react-helmet';
-import RegisterForm from 'components/RegisterForm';
-import { useAuth, useLoaders } from 'hooks';
+import { Loader } from '../components/Loader/Loader';
+import RegisterForm from '../components/RegisterForm/RegisterForm';
+import { useAuth } from '../hooks';
 
-const Register = () => {
+const Register: FC = () => {
   const { isLoading } = useAuth();
-  const { LoaderBig } = useLoaders();
 
   return (
     <>
@@ -12,7 +13,7 @@ const Register = () => {
         <title>Registration</title>
       </Helmet>
 
-      {isLoading && <LoaderBig />}
+      {isLoading && <Loader />}
       <RegisterForm />
     </>
   );

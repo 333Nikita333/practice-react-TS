@@ -1,9 +1,10 @@
+import { FC } from 'react';
 import { AiFillHome } from 'react-icons/ai';
 import { GiBookmarklet } from 'react-icons/gi';
-import { useAuth } from 'hooks/useAuth';
-import { Nav, Link } from './Navigation.styled';
+import { useAuth } from '../../hooks';
+import { Link, Nav } from './Navigation.styled';
 
-const Navigation = () => {
+const Navigation: FC = () => {
   const { isLoggedIn } = useAuth();
 
   return (

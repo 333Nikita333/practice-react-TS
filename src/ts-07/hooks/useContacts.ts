@@ -3,14 +3,15 @@ import {
   selectContacts,
   selectError,
   selectIsLoading,
-} from 'redux/contacts/selectors';
-import { filterListContacts } from 'redux/filrer/selectors';
+} from '../redux/contacts/selectors';
+import { filterListContacts } from '../redux/filrer/selectors';
+import { Contact } from '../types/interfaces';
 
 export const useContacts = () => {
-  const allContacts = useSelector(selectContacts);
-  const filteredContacts = useSelector(filterListContacts);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const allContacts: Contact[] = useSelector(selectContacts);
+  const filteredContacts: Contact[] = useSelector(filterListContacts);
+  const isLoading: boolean = useSelector(selectIsLoading);
+  const error: string | null = useSelector(selectError);
 
   return {
     allContacts,

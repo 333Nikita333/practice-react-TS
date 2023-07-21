@@ -1,29 +1,31 @@
-import { useDispatch } from 'react-redux';
-import { ErrorMessage, Formik } from 'formik';
-import { object, string } from 'yup';
-import { RiLockPasswordFill } from 'react-icons/ri';
+import { ErrorMessage, Formik, FormikHelpers } from 'formik';
+import { FC } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
-import { register } from 'redux/auth/operations';
-
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { ObjectSchema, object, string } from 'yup';
+import { register } from '../../redux/auth/operations';
+import { AppDispatch } from '../../redux/store';
+import { UserRegister } from '../../types/interfaces';
 import {
-  ErrorMessageText,
   Container,
-  Label,
-  Text,
-  Input,
+  ErrorMessageText,
   FormBox,
+  Input,
+  Label,
   SubmitButton,
+  Text,
   Title,
 } from './RegisterForm.styled';
 
-const initialValues = {
+const initialValues: UserRegister = {
   name: '',
   email: '',
   password: '',
 };
 
-const userSchema = object({
+const userSchema: ObjectSchema<UserRegister> = object({
   name: string()
     .required('Name is required')
     .min(2, 'Too Short!')
@@ -32,10 +34,13 @@ const userSchema = object({
   password: string().required('Password is required'),
 });
 
-const RegisterForm = () => {
-  const dispatch = useDispatch();
+const RegisterForm: FC = () => {
+  const dispatch: AppDispatch = useDispatch();
 
-  const handleSubmit = ({ name, email, password }, { resetForm }) => {
+  const handleSubmit = (
+    { name, email, password }: UserRegister,
+    { resetForm }: FormikHelpers<UserRegister>
+  ): void => {
     dispatch(register({ name, email, password }));
     resetForm();
   };
@@ -53,11 +58,7 @@ const RegisterForm = () => {
             <Text>
               <FaUserAlt size={20} /> Name
             </Text>
-            <Input
-              placeholder="Please enter a name"
-              type="text"
-              name="name"
-            />
+            <Input placeholder="Please enter a name" type="text" name="name" />
             <ErrorMessage component={ErrorMessageText} name="name" />
           </Label>
           <Label>

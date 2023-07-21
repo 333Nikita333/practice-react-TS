@@ -1,21 +1,21 @@
-import { ErrorMessage } from 'formik';
-import { object, string } from 'yup';
-import PropTypes from 'prop-types';
+import { ErrorMessage, Formik, FormikHelpers } from 'formik';
+import { FC } from 'react';
+import { ObjectSchema, object, string } from 'yup';
+import { ContactFormProps, ContactFormValues } from '../../types/types';
 import {
+  Button,
   FormBox,
   InputName,
   InputTel,
-  Button,
-  FormikWrapper,
   Message,
 } from './ContactsForm.styled';
 
-const initialValues = {
+const initialValues: ContactFormValues = {
   name: '',
   number: '',
 };
 
-const userSchema = object({
+const userSchema: ObjectSchema<ContactFormValues> = object({
   name: string()
     .matches(
       /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
@@ -30,14 +30,17 @@ const userSchema = object({
     .required(),
 });
 
-const ContactsForm = ({ onSubmit }) => {
-  function handleSubmit({ name, number }, { resetForm }) {
+const ContactsForm: FC<ContactFormProps> = ({ onSubmit }) => {
+  function handleSubmit(
+    { name, number }: ContactFormValues,
+    { resetForm }: FormikHelpers<ContactFormValues>
+  ): void {
     onSubmit(name, number);
     resetForm();
   }
 
   return (
-    <FormikWrapper
+    <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={userSchema}
@@ -50,17 +53,17 @@ const ContactsForm = ({ onSubmit }) => {
         </label>
         <label>
           <span>Phone</span>
-          <InputTel placeholder="Enter contact phone" type="tel" name="number" />
+          <InputTel
+            placeholder="Enter contact phone"
+            type="tel"
+            name="number"
+          />
           <ErrorMessage component={Message} name="number" />
         </label>
         <Button type="submit">Add contact</Button>
       </FormBox>
-    </FormikWrapper>
+    </Formik>
   );
-};
-
-ContactsForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default ContactsForm;

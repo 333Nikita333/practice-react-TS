@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { logIn } from 'redux/auth/operations';
-import { ErrorMessage, Formik } from 'formik';
-import { object, string } from 'yup';
+import { ErrorMessage, Formik, FormikHelpers } from 'formik';
+import { ObjectSchema, object, string } from 'yup';
 import { FiMail } from 'react-icons/fi';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import {
@@ -14,21 +13,28 @@ import {
   SubmitButton,
   Title,
 } from './LoginForm.styled';
+import { logIn } from '../../redux/auth/operations';
+import { UserLogin } from '../../types/interfaces';
+import { FC } from 'react';
+import { AppDispatch } from '../../redux/store';
 
-const initialValues = {
+const initialValues: UserLogin = {
   email: '',
   password: '',
 };
 
-const userSchema = object({
+const userSchema: ObjectSchema<UserLogin> = object({
   email: string().email('Invalid email').required('Email is required'),
   password: string().required('Password is required'),
 });
 
-const LoginForm = () => {
-  const dispatch = useDispatch();
+const LoginForm: FC = () => {
+  const dispatch: AppDispatch = useDispatch();
 
-  const handleSubmit = ({ email, password }, { resetForm }) => {
+  const handleSubmit = (
+    { email, password }: UserLogin,
+    { resetForm }: FormikHelpers<UserLogin>
+  ): void => {
     dispatch(logIn({ email, password }));
     resetForm();
   };
@@ -41,7 +47,7 @@ const LoginForm = () => {
         validationSchema={userSchema}
       >
         <FormBox autoComplete="off">
-        <Title>Authorization</Title>
+          <Title>Authorization</Title>
           <Label>
             <Text>
               <FiMail size={20} />

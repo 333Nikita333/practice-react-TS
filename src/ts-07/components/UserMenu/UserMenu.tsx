@@ -1,11 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { FC } from 'react';
 import { CiLogout } from 'react-icons/ci';
-import { logOut } from 'redux/auth/operations';
-import { useAuth } from 'hooks/useAuth';
-import { UserName, Wrapper, Button, Avatar } from './UserMenu.styled';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../../hooks';
+import { logOut } from '../../redux/auth/operations';
+import { AppDispatch } from '../../redux/store';
+import { Avatar, Button, UserName, Wrapper } from './UserMenu.styled';
 
-const UserMenu = () => {
-  const dispatch = useDispatch();
+const UserMenu: FC = () => {
+  const dispatch: AppDispatch = useDispatch();
   const { user } = useAuth();
 
   const onLogOut = () => {

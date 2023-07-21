@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import { Helmet } from 'react-helmet';
-import ContactsBar from 'components/ContactsBar';
-import { useAuth, useLoaders } from 'hooks';
+import ContactsBar from '../components/ContactsBar/ContactsBar';
+import { Loader } from '../components/Loader/Loader';
+import { useAuth } from '../hooks';
 
-const Contacts = () => {
+const Contacts: FC = () => {
   const { isLoading } = useAuth();
-  const { LoaderBig } = useLoaders();
 
   return (
     <>
@@ -12,7 +13,7 @@ const Contacts = () => {
         <title>Contacts</title>
       </Helmet>
 
-      {isLoading && <LoaderBig />}
+      {isLoading && <Loader />}
       <ContactsBar />
     </>
   );

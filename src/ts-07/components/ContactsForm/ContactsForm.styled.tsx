@@ -1,7 +1,5 @@
-import { Form, Field, Formik } from 'formik';
+import { Form, Field } from 'formik';
 import styled from 'styled-components';
-
-export const FormikWrapper = styled(Formik)``;
 
 export const FormBox = styled(Form)`
   display: flex;
@@ -16,15 +14,15 @@ export const FormBox = styled(Form)`
 
   background: white;
   border-radius: 30px;
-  
+
   & label {
     display: flex;
     flex-direction: column;
     width: 100%;
-    
+
     & span {
       margin-bottom: 5px;
-      
+
       font-size: 20px;
       text-shadow: 0 1px 0 #cccccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb,
         0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1),
@@ -45,7 +43,7 @@ export const InputName = styled(Field)`
   font-style: italic;
   font-size: 18px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  
+
   &:focus {
     outline: none;
     border: solid 2px #560bad;
@@ -62,7 +60,7 @@ export const Button = styled.button`
   padding: 5px;
   width: 8em;
   height: 2.6em;
-  
+
   font-family: inherit;
   font-size: 17px;
   font-weight: 500;
@@ -70,12 +68,12 @@ export const Button = styled.button`
   border: 2px solid var(--color);
   border-radius: 6px;
   color: var(--color);
-  
+
   position: relative;
   z-index: 1;
   overflow: hidden;
   transition: color 0.5s;
-  
+
   &:before {
     content: '';
     height: 150px;

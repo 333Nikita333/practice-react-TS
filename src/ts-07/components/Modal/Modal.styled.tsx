@@ -1,4 +1,4 @@
-import { Form, Field, Formik } from 'formik';
+import { Form, Field } from 'formik';
 import styled, { keyframes } from 'styled-components';
 
 const fadeIn = keyframes`
@@ -23,8 +23,6 @@ export const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1200;
 `;
-
-export const FormikWrapper = styled(Formik)``;
 
 export const Title = styled.h3`
   font-size: 30px;

@@ -1,13 +1,16 @@
+import { ChangeEvent, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterContacts } from 'redux/filrer/slice';
-import { selectFilter } from 'redux/filrer/selectors';
-import { LabelFilter, InputFilter } from './Filter.styled';
+import { selectFilter } from '../../redux/filrer/selectors';
+import { filterContacts } from '../../redux/filrer/slice';
+import { AppDispatch } from '../../redux/store';
+import { RootState } from '../../types/interfaces';
+import { InputFilter, LabelFilter } from './Filter.styled';
 
-const Filter = () => {
-  const dispatch = useDispatch();
-  const filter = useSelector(selectFilter);
+const Filter: FC = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const filter: string = useSelector((state: RootState) => selectFilter(state));
 
-  function handleInputChange(e) {
+  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     dispatch(filterContacts(e.target.value));
   }
 
@@ -17,7 +20,7 @@ const Filter = () => {
       <InputFilter
         type="text"
         name="filter"
-        placeholder='Search...'
+        placeholder="Search..."
         value={filter}
         onChange={handleInputChange}
       />

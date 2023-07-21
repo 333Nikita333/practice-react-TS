@@ -1,8 +1,9 @@
-import { FaRegRegistered } from 'react-icons/fa';
+import { FC } from 'react';
 import { BiLogInCircle } from 'react-icons/bi';
+import { FaRegRegistered } from 'react-icons/fa';
 import { AuthLink, Wrapper } from './AuthNav.styled';
 
-const AuthNav = () => {
+const AuthNav: FC = () => {
   return (
     <Wrapper>
       <AuthLink to="/register">
